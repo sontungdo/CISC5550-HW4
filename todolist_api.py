@@ -41,7 +41,7 @@ def add_entry():
     return jsonify({"message": "Added Successfully!"})
 
 
-@app.route("/api/delete/<item>", methods=["POST"])
+@app.route("/api/delete/<item>", methods=["DELETE"])
 def delete_entry(item):
     db = get_db()
     db.execute("DELETE FROM entries WHERE what_to_do='"+item+"'")
@@ -49,7 +49,7 @@ def delete_entry(item):
     return jsonify({"message": "Deleted Successfully!"})
 
 
-@app.route("/api/mark/<item>", methods=["POST"])
+@app.route("/api/mark/<item>", methods=["PUT"])
 def mark_as_done(item):
     db = get_db()
     db.execute("UPDATE entries SET status='done' WHERE what_to_do='"+item+"'")

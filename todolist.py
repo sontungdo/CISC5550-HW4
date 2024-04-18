@@ -3,11 +3,12 @@ import requests
 
 app = Flask(__name__)
 
+api_address = "35.222.253.41"
 
 @app.route("/")
 def show_list():
     # Fetch data from the API route
-    resp = requests.get("http://localhost:5001/api/items") 
+    resp = requests.get("http://"+api_address+":5001/api/items") 
     resp = resp.json()
     return render_template('index.html', todolist=resp)
 
@@ -16,21 +17,21 @@ def show_list():
 def add_entry():
     # Send data to the API route
     new_todo = {"what_to_do": request.form["what_to_do"], "due_date": request.form["due_date"]}
-    resp = requests.post("http://localhost:5001/api/add", json=new_todo)  
+    resp = requests.post("http://"+api_address+":5001/api/add", json=new_todo)  
     return redirect(url_for('show_list'))
 
 
-@app.route("/delete/<item>", methods=['POST'])
+@app.route("/delete/<item>", methods=['DELETE'])
 def delete_entry(item):
     # Send delete request to the API route
-    resp = requests.delete("http://localhost:5001/api/delete/" + item)
+    resp = requests.delete("http://"+api_address+":5001/api/delete/" + item)
     return redirect(url_for('show_list'))
 
 
-@app.route("/mark/<item>", methods=['POST'])
+@app.route("/mark/<item>", methods=['PUT'])
 def mark_as_done(item):
     # Send mark request to the API route
-    resp = requests.put("http://localhost:5001/api/mark/" + item)
+    resp = requests.put("http://"+api_address+":5001/api/mark/" + item)
     return redirect(url_for('show_list'))
 
 
