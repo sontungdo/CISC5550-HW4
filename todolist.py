@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-api_address = "35.222.253.41"
+api_address = "34.69.165.3"
 
 @app.route("/")
 def show_list():
@@ -21,14 +21,14 @@ def add_entry():
     return redirect(url_for('show_list'))
 
 
-@app.route("/delete/<item>", methods=['DELETE'])
+@app.route("/delete/<item>", methods=['GET'])
 def delete_entry(item):
     # Send delete request to the API route
     resp = requests.delete("http://"+api_address+":5001/api/delete/" + item)
     return redirect(url_for('show_list'))
 
 
-@app.route("/mark/<item>", methods=['PUT'])
+@app.route("/mark/<item>", methods=['GET'])
 def mark_as_done(item):
     # Send mark request to the API route
     resp = requests.put("http://"+api_address+":5001/api/mark/" + item)
